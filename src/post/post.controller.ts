@@ -2,12 +2,14 @@ import {
   Controller,
   Delete,
   Get,
+  Headers,
   Param,
   Patch,
   Post,
   Query,
 } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { AuthMiddleware } from "src/util/auth";
 
 @Controller("post")
 @ApiTags("대충 게시글 관련 API")
@@ -31,19 +33,32 @@ export class PostController {
     summary: "게시글 생성",
     description: "게시글을 생성해줍니다.",
   })
-  async createPost() {}
+  @AuthMiddleware.tokenValidate
+  async createPost(email: string, @Headers("authorization") token: string) {
+    console.log(["email : ", email, "token : ", token]);
+  }
 
   @Patch(":id")
   @ApiOperation({
     summary: "게시글 수정",
     description: "게시글을 수정하여봅시다.",
   })
-  async patchPost(@Param("id") postId: number) {}
+  @AuthMiddleware.tokenValidate
+  async patchPost(
+    email: string,
+    @Headers("authorization") token: string,
+    @Param("id") postId: number
+  ) {}
 
   @Delete(":id")
   @ApiOperation({
     summary: "게시글 삭제",
     description: "게시글을 삭제해봅시다.",
   })
-  async deletePost(@Param("id") postId: number) {}
+  @AuthMiddleware.tokenValidate
+  async deletePost(
+    email: string,
+    @Headers("authorization") token: string,
+    @Param("id") postId: number
+  ) {}
 }
