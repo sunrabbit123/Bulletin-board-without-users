@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule } from "@nestjs/config";
+
 import { PostModule } from "./post/post.module";
 import { CommentModule } from "./comment/comment.module";
-import { UserController } from './user/user.controller';
-import { UserModule } from './user/user.module';
+import { UserModule } from "./user/user.module";
 
 @Module({
   imports: [
@@ -16,11 +17,14 @@ import { UserModule } from './user/user.module';
       database: "test",
       autoLoadEntities: true,
       synchronize: true,
+      entities: [__dirname + "/**/*/entity/*{.ts,.js}"],
+    }),
+    ConfigModule.forRoot({
+      envFilePath: [".env"],
     }),
     PostModule,
     CommentModule,
     UserModule,
   ],
-  controllers: [UserController],
 })
 export class AppModule {}

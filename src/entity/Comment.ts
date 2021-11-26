@@ -7,12 +7,6 @@ export class Comment {
   id: number;
 
   @Column()
-  name: string;
-
-  @Column()
-  password: string;
-
-  @Column()
   content: string;
 
   @ManyToOne(() => Post, (post) => post.comments)

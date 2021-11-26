@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./User";
-import { Comment } from "./comment";
+import { Comment } from "./Comment";
 
 @Entity()
 export class Post {
