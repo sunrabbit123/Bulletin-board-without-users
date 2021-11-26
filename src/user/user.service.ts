@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../entity/User";
 import { generatedTokenByEmail, hashPassword } from "src/util/crypto";
 import { Repository } from "typeorm";
-import { LoginUserDTO, RegistUserDTO } from "./user.dto";
+import { LoginUserDTO, RegistUserDTO, UserDTO } from "./user.dto";
 
 @Injectable()
 export class UserService {
@@ -41,5 +41,13 @@ export class UserService {
       token,
     });
   }
-  async login({}: LoginUserDTO) {}
+
+  async login({ email, password }: LoginUserDTO): Promise<UserDTO> {
+    return (
+      await this.userRepository.find({
+        email,
+        password: hashPassword(password),
+      })
+    )[0];
+  }
 }
