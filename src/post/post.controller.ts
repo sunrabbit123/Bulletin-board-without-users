@@ -9,7 +9,8 @@ import {
   Query,
 } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { AuthMiddleware } from "src/util/auth";
+
+import { AuthMiddleware } from "../util/auth";
 
 @Controller("post")
 @ApiTags("대충 게시글 관련 API")
@@ -34,9 +35,7 @@ export class PostController {
     description: "게시글을 생성해줍니다.",
   })
   @AuthMiddleware.tokenValidate
-  async createPost(email: string, @Headers("authorization") token: string) {
-    console.log(["email : ", email, "token : ", token]);
-  }
+  async createPost(email: string, @Headers("authorization") token: string) {}
 
   @Patch(":id")
   @ApiOperation({
