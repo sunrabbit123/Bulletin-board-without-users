@@ -22,12 +22,11 @@ export class Post {
   @Column()
   tags: string;
 
-  @Column()
-  password: string;
-
-  @OneToMany(() => Comment, (comment) => comment.post)
+  @OneToMany(() => Comment, (comment) => comment.post, {
+    cascade: true,
+  })
   comments: Comment[];
 
-  @ManyToOne(() => User, (user) => user.posts)
+  @ManyToOne(() => User, (user) => user.posts, { onDelete: "CASCADE" })
   user: User;
 }
