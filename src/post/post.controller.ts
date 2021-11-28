@@ -44,7 +44,7 @@ export class PostController {
 
   @Post("")
   @ApiOperation({
-    summary: "게시글 생성",
+    summary: "게시글 생성(Auth)",
     description: "게시글을 생성해줍니다.",
   })
   @ApiOkResponse({ description: "성공 시", type: PostDTO })
@@ -59,7 +59,7 @@ export class PostController {
 
   @Patch(":id")
   @ApiOperation({
-    summary: "게시글 수정",
+    summary: "게시글 수정(Auth)",
     description: "게시글을 수정하여봅시다.",
   })
   @ApiOkResponse({ description: "성공 시", type: PostDTO })
@@ -75,7 +75,7 @@ export class PostController {
 
   @Delete(":id")
   @ApiOperation({
-    summary: "게시글 삭제",
+    summary: "게시글 삭제(Auth)",
     description: "게시글을 삭제해봅시다.",
   })
   @ApiOkResponse({ description: "성공 시", type: PostDTO })

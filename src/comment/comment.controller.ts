@@ -7,8 +7,9 @@ import {
   Headers,
   Body,
 } from "@nestjs/common";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthMiddleware } from "src/util/auth";
+import { CommentContainsBothDTO, CommentContainsUserDTO } from "./comment.dto";
 import { CommentService } from "./comment.service";
 
 @Controller("comment")
@@ -18,9 +19,10 @@ export class CommentController {
 
   @Post(":id")
   @ApiOperation({
-    summary: "게시물 댓글 달기",
+    summary: "게시물 댓글 달기(Auth)",
     description: "해당 게시물에 댓글을 달아드립니다~",
   })
+  @ApiOkResponse({ description: "성공 시", type: CommentContainsBothDTO })
   @AuthMiddleware.tokenValidate
   async addCommentByPost(
     email: string,
@@ -33,9 +35,10 @@ export class CommentController {
 
   @Patch(":id")
   @ApiOperation({
-    summary: "댓글 수정",
+    summary: "댓글 수정(Auth)",
     description: "id값에 해당하는 댓글을 수정합니다.",
   })
+  @ApiOkResponse({ description: "성공 시", type: CommentContainsUserDTO })
   @AuthMiddleware.tokenValidate
   async patchCommentByPost(
     email: string,
@@ -48,9 +51,10 @@ export class CommentController {
 
   @Delete(":id")
   @ApiOperation({
-    summary: "댓글 삭제",
+    summary: "댓글 삭제(Auth)",
     description: "해당 id값에 해당하는 댓글을 삭제합니다.",
   })
+  @ApiOkResponse({ description: "성공 시", type: CommentContainsUserDTO })
   @AuthMiddleware.tokenValidate
   async deleteComment(
     email: string,

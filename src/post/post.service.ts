@@ -19,14 +19,20 @@ export class PostService {
     return !isNaN(Number(data));
   }
 
-  getPostById(id: number): Promise<Post> {
+  async getPostById(id: number): Promise<Post> {
     if (id == undefined) {
       throw new BadRequestException("id값이 있어야 합니다.");
     }
     if (!this.isNumeric(id)) {
       throw new BadRequestException("id값이 숫자여야 합니다.");
     }
-    return this.postRepository.findOne({ id });
+    return (
+      await this.postRepository.find({
+        where: { id },
+        select: ["id", "title", "content", "tags", "comments"],
+        relations: ["comments"],
+      })
+    )[0];
   }
   async searchPostByKeywordAndPaging({
     page,
