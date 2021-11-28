@@ -18,7 +18,7 @@ import { UserModule } from "./user/user.module";
       autoLoadEntities: true,
       synchronize: true,
       entities: [__dirname + "/**/*/entity/*{.ts,.js}"],
-      logging: true,
+      logging: false,
     }),
     ConfigModule.forRoot({
       envFilePath: [".env"],
