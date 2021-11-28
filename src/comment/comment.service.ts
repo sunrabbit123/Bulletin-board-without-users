@@ -35,7 +35,13 @@ export class CommentService {
     if (!this.isNumeric(id)) {
       throw new BadRequestException("id값이 숫자여야 합니다.");
     }
-    const comment = await this.commentRepository.findOne({ id });
+    const comment = (
+      await this.commentRepository.find({
+        where: { id, user: { email } },
+        relations: ["user"],
+      })
+    )[0];
+    console.log(comment);
     if (comment.user.email != email) {
       throw new ForbiddenException("권한이 없습니다");
     }
@@ -48,9 +54,12 @@ export class CommentService {
       throw new BadRequestException("id값이 숫자여야 합니다.");
     }
 
-    const targetComment = await this.commentRepository.findOne({
-      id,
-    });
+    const targetComment = (
+      await this.commentRepository.find({
+        where: { id, user: { email } },
+        relations: ["user"],
+      })
+    )[0];
 
     if (!targetComment) {
       throw new NotFoundException("찾을 수 없습니다.");

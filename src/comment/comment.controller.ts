@@ -28,7 +28,7 @@ export class CommentController {
     @Param("id") postId: number,
     @Body("content") content: string
   ) {
-    this.commentService.addCommentByPost(postId, email, content);
+    return this.commentService.addCommentByPost(postId, email, content);
   }
 
   @Patch(":id")
@@ -43,7 +43,7 @@ export class CommentController {
     @Param("id") commentId: number,
     @Body("content") content: string
   ) {
-    this.commentService.patchCommentByPost(commentId, email, content);
+    return this.commentService.patchCommentByPost(commentId, email, content);
   }
 
   @Delete(":id")
@@ -57,6 +57,6 @@ export class CommentController {
     @Headers("authorization") token: string,
     @Param("id") commentId: number
   ) {
-    this.commentService.deleteComment(commentId, email);
+    return this.commentService.deleteComment(commentId, email);
   }
 }
